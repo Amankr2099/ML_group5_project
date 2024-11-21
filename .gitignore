@@ -1,0 +1,50 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environment directories
+venv/
+env/
+ENV/
+.venv/
+.ipython/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore any model output directories
+output/
+final_models/
+logs/
+
+# Ignore all temporary files created by Jupyter
+*.bak
+*.swp
+*.swo
+*.tmp
+
+# Ignore TensorFlow/Keras or PyTorch model files (if applicable)
+*.h5
+*.pt
+*.pth
+*.ckpt
+*.bin
+*.tf
+
+# Ignore cache directories created by huggingface transformers library
+.cache/
+transformers_cache/
+
+# Ignore large datasets or dataset-related files
+data/
+
+# Ignore any configuration files that are not needed in version control
+config.json
+*.yaml
+*.yml
+*.toml
+
+# Ignore any environment-specific files
+*.env
+.envrc
