@@ -1,43 +1,41 @@
-# Toxic Comment Classifier
+# Toxic Comment Classifier Using BERT
 
-This repository contains a project for detecting toxic comments using machine learning. The project focuses on classifying comments into three categories: **Hate Speech**, **Offensive**, and **Neutral**.
+This project focuses on building a deep learning model to classify tweets into three categories: **Hate**, **Offensive**, and **Neutral**. The model is based on **DistilBERT**, a smaller, faster version of BERT, fine-tuned to detect toxic comments in text. This project implements a **toxic comment detection** model using **DistilBERT**, a transformer-based pre-trained model. The model is fine-tuned on a dataset of labeled tweets to classify comments into three categories:
+1. **Hate**: Contains hate speech or discrimination.
+2. **Offensive**: Contains offensive but not necessarily hateful language.
+3. **Neutral**: Non-offensive and neutral language.
 
-The dataset used in this project is from [Kaggle: Hate Speech and Offensive Language Dataset](https://www.kaggle.com/datasets/mrmorj/hate-speech-and-offensive-language-dataset).
+The goal is to detect and flag potentially harmful language automatically, which can be used in content moderation systems. The dataset used in this project is from [Kaggle: Hate Speech and Offensive Language Dataset](https://www.kaggle.com/datasets/mrmorj/hate-speech-and-offensive-language-dataset).
 
----
 
-## **Project Structure**
-The project is organized into three main Jupyter Notebooks:
+## Dataset
 
-1. **`Data_Analysis_and_Processing.ipynb`**  
-   - Prepares and processes the dataset for model training.  
-   - Tasks include data cleaning, exploratory data analysis (EDA), and preprocessing.  
-   - Steps include:  
-     - Removing usernames, URLs, and special characters.  
-     - Tokenization, stopword removal, stemming, and lemmatization.  
-     - Balancing the dataset using downsampling.  
+The model is trained on a dataset of tweets labeled for hate speech and offensive language detection. The dataset is loaded from a CSV file containing the following columns:
+- **Unnamed: 0**: An index or identifier for each record.
+- **count**: The number of words in the tweet.
+- **hate_speech**: A score indicating the presence of hate speech.
+- **offensive_language**: A score indicating offensive language.
+- **neither**: A score indicating neutrality.
+- **class**: The label (0 for hate speech, 1 for offensive language, 2 for neutral).
+- **tweet**: The text of the tweet.
 
-2. **`Traditional_model_training.ipynb`**  
-   - Implements and trains machine learning models.  
-   - Features extraction using **TF-IDF Vectorization**.  
-   - Models trained:  
-     - Logistic Regression  
-     - Decision Tree  
-     - Random Forest  
-   - Includes hyperparameter tuning and performance evaluation.
+## Model
 
-3. **`Prediction.ipynb`**  
-   - Provides a pipeline for predicting the class of a new comment.  
-   - Uses the trained Logistic Regression model for predictions.  
-   - Includes a function for cleaning and vectorizing input comments.  
+The model is based on **DistilBERT**, which is a distilled version of the BERT model. The model architecture is as follows:
+- **DistilBERT**: A pre-trained transformer encoder that learns contextual relationships between words in a sentence.
+- **Fully Connected Layers**: Three fully connected layers are used to make the final classification.
+- **Dropout and ReLU Activations**: Used for regularization and non-linearity.
 
----
+### Key Layers:
+1. **DistilBERT Layer**: Extracts contextual embeddings from the input text.
+2. **Fully Connected Layers**: Map the embeddings to a final output of size 3, corresponding to the three classes.
+3. **Dropout**: Applied to prevent overfitting.
 
 ## **How to Run the Project**
 
 ### **Step 1: Clone the Repository**
 ```bash
-git clone https://github.com/your_username/toxic-comment-classifier.git
+git clone https://github.com/Amankr2099/ML_group5_project.git
 cd toxic-comment-classifier
 ```
 
@@ -51,7 +49,11 @@ The following libraries and dependencies are required to run the notebooks:
 - **nltk**
 - **matplotlib** (for visualizations)
 - **pickle** (for saving and loading models)
+You can install the required libraries using `pip`:
 
+```bash
+pip install torch transformers scikit-learn matplotlib pandas
+```
 
 ## Step 3: Download the Dataset
 
@@ -60,7 +62,7 @@ The following libraries and dependencies are required to run the notebooks:
    - Make sure to download the file named `labeled_data.csv`.
 
 2. **Place the Dataset**: 
-   - After downloading, place the `labeled_data.csv` file in the root directory of this project.
+   - After downloading, place the `data.csv` file in the root directory of this project.
 
 ## Step 4: Run the Notebooks
 
@@ -68,34 +70,18 @@ The following libraries and dependencies are required to run the notebooks:
 - **Notebook**: `Data_Analysis_and_Processing.ipynb`
 - **Description**: Open and run the `Data_Analysis_and_Processing.ipynb` notebook to preprocess and prepare the dataset for training.
 
-### Model Training
+### Traditional Model Training
 - **Notebook**: `Traditional_model_training.ipynb`
 - **Description**: Open and run the `Traditional_model_training.ipynb` notebook to train and evaluate machine learning models.
 
+### Bert Fine Tuning
+- **Notebook**: `Bert_tuning.ipynb`
+- **Description**: Open and run the `Traditional_model_training.ipynb` notebook bert model with the dataset.
+- 
 ### Prediction
-- **Notebook**: `Prediction.ipynb`
+- **Notebook**: `Prediction_bert.ipynb`
 - **Description**: Use the `Prediction.ipynb` notebook to test the pipeline and predict new comments.
 
 
 
-## Project Workflow
-
-### 1. Data Preprocessing
-- **Cleaning the Dataset**: The dataset was cleaned by handling missing values, removing duplicates, and standardizing the data format.
-- **Class Balancing**: Class imbalance was addressed using techniques like oversampling or undersampling to ensure fair model training.
-- **Feature Engineering**: Text data was processed and vectorized using **TF-IDF (Term Frequency-Inverse Document Frequency)** to convert raw text into numerical features.
-
-### 2. Model Training and Evaluation
-- **Trained Models**: The following models were trained and evaluated:
-  - **Logistic Regression**: A linear model for binary classification.
-  - **Decision Tree**: A tree-based model used for both classification and regression tasks.
-  - **Random Forest**: An ensemble learning method that builds multiple decision trees.
-  
-- **Model Optimization**: Hyperparameters for each model were fine-tuned using techniques like GridSearchCV or RandomizedSearchCV to find the optimal configuration and improve model performance.
-
-### 3. Final Prediction
-- **Best Model Selection**: Based on model performance (accuracy, precision, recall, etc.), **Logistic Regression** was selected as the best model.
-- **Real-Time Classification Pipeline**: A pipeline was created for real-time comment classification using the trained Logistic Regression model, allowing the model to classify new, unseen data automatically.
-
-This workflow outlines the steps from data preparation to model evaluation and deployment for real-time predictions.
 
